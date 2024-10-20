@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const Orders = () => {
+const Category = () => {
   return (
     <View>
-      <Text>Orders</Text>
+      <Text>Category</Text>
     </View>
   );
 };
 
-export default Orders;
+export default Category;
 
 const styles = StyleSheet.create({});
