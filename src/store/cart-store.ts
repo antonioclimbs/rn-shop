@@ -88,7 +88,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
   getItemsCount: () => {
     return get().items.reduce(
-      (acc, item) => acc + item.price * item.quantity,
+      (acc, item) => acc + item.quantity,
       // Math.min(
       //   item.quantity,
       //   PRODUCTS.find((p) => p.id === item.id)?.maxQuantity || item.quantity

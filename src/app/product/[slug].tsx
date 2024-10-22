@@ -1,4 +1,12 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useState } from 'react';
 import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
 import { useToast } from 'react-native-toast-notifications';
@@ -24,9 +32,45 @@ const ProductDetails = () => {
 
   const [quantity, setQuantity] = useState(initialQuantity);
 
-  const increaseQuantity = () => {};
-  const decreaseQuantity = () => {};
-  const addToCart = () => {};
+  const increaseQuantity = () => {
+    if (quantity < product.maxQuantity) {
+      setQuantity(quantity + 1);
+      incrementItem(product.id);
+    } else {
+      toast.show('Cannot add more than maximum quantity', {
+        type: 'warning',
+        placement: 'top',
+      });
+    }
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+      decrementItem(product.id);
+    } else {
+      toast.show('Cannot decrease quantity below 1', {
+        type: 'warning',
+        placement: 'top',
+      });
+    }
+  };
+
+  const addToCart = () => {
+    addItem({
+      id: product.id,
+      title: product.title,
+      image: product.heroImage,
+      price: product.price,
+      quantity,
+    });
+
+    toast.show('Product added to cart', {
+      type: 'success',
+      placement: 'top',
+      duration: 1500,
+    });
+  };
 
   const totalPrice = (product.price * quantity).toFixed(2);
 
@@ -55,6 +99,34 @@ const ProductDetails = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.imagesContainer}
         />
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={decreaseQuantity}
+            disabled={quantity < 1}
+          >
+            <Text style={styles.quantityButtonText}>-</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.quantity}>{quantity}</Text>
+
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={increaseQuantity}
+            disabled={quantity >= product.maxQuantity}
+          >
+            <Text style={styles.quantityButtonText}>+</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.addToCartButton}
+            onPress={addToCart}
+            disabled={quantity < 1}
+          >
+            <Text style={styles.addToCartText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
