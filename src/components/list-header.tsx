@@ -1,4 +1,11 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -16,24 +23,29 @@ export const ListHeader = () => {
             <Text style={styles.avatarText}>Hi, Antonio</Text>
           </View>
         </View>
-        <Link style={styles.cartContainer} href="/cart" asChild>
-          <Pressable>
-            {({ pressed }) => (
-              <View>
-                <FontAwesome
-                  name="shopping-cart"
-                  size={25}
-                  color="gray"
-                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                />
+        <View style={styles.headerRight}>
+          <Link style={styles.cartContainer} href="/cart" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <View>
+                  <FontAwesome
+                    name="shopping-cart"
+                    size={25}
+                    color="gray"
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
 
-                <View style={styles.badgeContainer}>
-                  <Text style={styles.badgeText}>{1}</Text>
+                  <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}>{1}</Text>
+                  </View>
                 </View>
-              </View>
-            )}
-          </Pressable>
-        </Link>
+              )}
+            </Pressable>
+          </Link>
+          <TouchableOpacity>
+            <FontAwesome name="sign-out" size={25} color="red" />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.heroContainer}></View>
       <View style={styles.categoriesContainer}></View>
