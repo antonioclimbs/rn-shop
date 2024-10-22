@@ -1,9 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
+import { ORDERS } from '../../../../assets/orders';
 
 const OrderDetails = () => {
+  const { slug } = useLocalSearchParams();
+
+  const order = ORDERS.find((order) => order.slug === slug);
+
+  if (!order) {
+    return <Redirect href={'/404'} />;
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
+      <Stack.Screen options={{ title: `${order.item}` }} />
       <Text>OrderDetails</Text>
     </View>
   );
